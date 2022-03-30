@@ -5,8 +5,8 @@ const cors = require('cors') // Handling CORS for accessible APIs
 const morgan = require('morgan') // Request logging
 const compression = require('compression') // GZIP middleware for compressing responses
 const path = require('path')
-require('./utils/dbConnection').config()
 require('dotenv').config()
+require('./utils/dbConnection').config()
 
 // App
 const routes = express()
