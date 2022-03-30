@@ -20,9 +20,13 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
+    "globals": {
+      "fetch": false
+    },
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "standard",
+      "standard-jsx",
+      "standard-react"
     ]
   },
   "browserslist": {
@@ -36,5 +40,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-config-standard-react": "^11.0.1",
+    "standard": "^16.0.4"
   }
 }
