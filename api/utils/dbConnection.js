@@ -14,4 +14,4 @@ const config = () => {
   return db
 }
 
-export default config
+module.exports = { config }
