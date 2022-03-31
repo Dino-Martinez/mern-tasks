@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import useArray from '../../hooks/useArray'
 import useFetch from '../../hooks/useFetch'
-import { List, Text } from '@mantine/core'
-import TaskIcon from '../TaskIcon/TaskIcon'
+import { Stack } from '@mantine/core'
+import Task from '../Task/Task'
 
 export default function TaskList () {
   const { arr, copy } = useArray([])
@@ -15,20 +15,13 @@ export default function TaskList () {
   return (
     <>
       {!loading && value &&
-        <List center>
+        <Stack center>
           {arr.map(task => {
             return (
-              <List.Item
-                key={task._id}
-                icon={
-                  <TaskIcon status={task.status} />
-                }
-              >
-                <Text component='span' size='xl'>{task.title} - {task.status}</Text>
-              </List.Item>
+              <Task key={task._id} task={task} />
             )
           })}
-        </List>}
+        </Stack>}
     </>
   )
 }
