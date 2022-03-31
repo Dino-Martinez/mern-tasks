@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Title, Text } from '@mantine/core'
-import { shape, string, oneOf, instanceOf } from 'prop-types'
+import { shape, string, oneOf } from 'prop-types'
 import TaskIcon from '../TaskIcon/TaskIcon'
 import './Task.css'
 
@@ -17,6 +17,6 @@ Task.propTypes = {
   task: shape({
     status: oneOf(['complete', 'incomplete', 'in progress']),
     title: string,
-    dueDate: instanceOf(Date)
+    dueDate: string
   })
 }
