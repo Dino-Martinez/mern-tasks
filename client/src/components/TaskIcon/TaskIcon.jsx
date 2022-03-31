@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import './TaskIcon.css'
 
 export default function TaskIcon ({ status }) {
-  const sizes = { outer: 24, inner: 20 }
+  const sizes = { outer: 48, inner: 40 }
   return (
     <>
       {status === 'complete' &&
