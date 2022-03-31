@@ -1,7 +1,7 @@
 {
-  "name": "mern-template",
+  "name": "mern-tasks",
   "version": "1.0.0",
-  "description": "This repo will provide a template for spinning up MERN Stack apps.",
+  "description": "This app will serve as a simple and clean task management app.",
   "main": "index.js",
   "scripts": {
     "start": "cd client && npm run build && cd ../api && npm run start",
