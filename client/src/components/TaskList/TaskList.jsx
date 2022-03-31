@@ -15,7 +15,7 @@ export default function TaskList () {
   return (
     <>
       {!loading && value &&
-        <Stack center>
+        <Stack>
           {arr.map(task => {
             return (
               <Task key={task._id} task={task} />
