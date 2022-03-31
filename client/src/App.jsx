@@ -1,15 +1,21 @@
 import './App.css'
 import React from 'react'
-import { Center, Container } from '@mantine/core'
+import { AppShell, Center, Container, MantineProvider } from '@mantine/core'
 import TaskList from './components/TaskList/TaskList'
+import Nav from './components/Nav/Nav'
 
 function App () {
   return (
-    <Container size='sm'>
-      <Center>
-        <TaskList />
-      </Center>
-    </Container>
+    <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles>
+      <Container size='sm'>
+        <AppShell padding={0}>
+          <Nav />
+        </AppShell>
+        <Center>
+          <TaskList />
+        </Center>
+      </Container>
+    </MantineProvider>
   )
 }
 
