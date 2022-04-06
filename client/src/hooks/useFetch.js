@@ -13,7 +13,7 @@ export default function useFetch (url, options = {}, dependencies = [], runOnMou
   const [error, setError] = useState()
   const firstUpdate = useRef(!runOnMount)
 
-  const get = (route = '', newOptions = {}) => {
+  const refetch = (route = '', newOptions = {}) => {
     const urlRoute = `${url}/${route}`
     setLoading(true)
     return fetch(urlRoute, { ...DEFAULT_OPTIONS, ...options, ...newOptions })
@@ -33,8 +33,17 @@ export default function useFetch (url, options = {}, dependencies = [], runOnMou
       }).catch(setError)
   }
 
+  const get = (route = '', newOptions = {}) => {
+    const urlRoute = `${url}/${route}`
+    return fetch(urlRoute, { ...DEFAULT_OPTIONS, ...options, ...newOptions })
+      .then(res => res.json())
+      .then(json => {
+        return json
+      }).catch(setError)
+  }
+
   useEffect(() => {
-    if (!firstUpdate.current) get()
+    if (!firstUpdate.current) refetch()
     if (firstUpdate.current) firstUpdate.current = false
   }, dependencies)
 
