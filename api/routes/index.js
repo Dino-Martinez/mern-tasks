@@ -32,4 +32,10 @@ module.exports = app => {
 
     res.json({ payload: task })
   })
+
+  app.delete('/:id', async (req, res) => {
+    const result = await Task.deleteOne({ _id: req.params.id })
+    console.log(req.params.id)
+    res.json({ payload: result })
+  })
 }
