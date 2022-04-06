@@ -1,4 +1,3 @@
-const { findByIdAndUpdate } = require('../models/task')
 const Task = require('../models/task')
 
 module.exports = app => {
@@ -26,7 +25,7 @@ module.exports = app => {
   app.put('/:id', async (req, res) => {
     const data = req.body
 
-    const task = await findByIdAndUpdate(req.params.id, data)
+    const task = await Task.findByIdAndUpdate(req.params.id, data)
 
     await task.save()
 
