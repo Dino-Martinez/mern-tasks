@@ -12,11 +12,13 @@ const useArray = (initial) => {
   }
 
   const update = (index, newVal) => {
-    setArr(prev => [
-      ...prev.slice(0, index),
-      newVal,
-      ...prev.slice(index + 1)
-    ])
+    setArr(prev => {
+      return [
+        ...prev.slice(0, index),
+        newVal,
+        ...prev.slice(index + 1)
+      ]
+    })
   }
 
   const pop = () => {

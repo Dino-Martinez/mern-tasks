@@ -1,28 +1,22 @@
 import React from 'react'
-import { Card, Title, Text, Group, Stack, Center, Tooltip } from '@mantine/core'
+import { Card, Title, Text, Group, Stack, Center } from '@mantine/core'
 import { shape, string, oneOf, func } from 'prop-types'
-import TaskIcon from '../TaskIcon/TaskIcon'
+import Status from '../Status/Status'
 import './Task.css'
 import DeleteIcon from '../DeleteIcon/DeleteIcon'
 
-export default function Task ({ task, onDelete }) {
+export default function Task ({ task, onDelete, onUpdate }) {
   const onClick = () => {
     onDelete(task._id)
+  }
+  const onSelect = value => {
+    onUpdate(task._id, value)
   }
   return (
     <Card shadow='md' p='lg'>
       <Group position='apart'>
         <Group position='left'>
-          <Tooltip
-            wrapLines
-            withArrow
-            position='left'
-            placement='center'
-            transition='rotate-left'
-            label={task.status}
-          >
-            <TaskIcon status={task.status} />
-          </Tooltip>
+          <Status status={task.status} onSelect={onSelect} />
           <Stack>
             {!task.dueDate &&
               <Center sx={{ height: '100%' }}>
@@ -48,5 +42,6 @@ Task.propTypes = {
     title: string,
     dueDate: string
   }),
-  onDelete: func
+  onDelete: func,
+  onUpdate: func
 }
