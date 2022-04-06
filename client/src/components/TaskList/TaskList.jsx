@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import useArray from '../../hooks/useArray'
 import useFetch from '../../hooks/useFetch'
-import { Button, Modal, Stack, Text } from '@mantine/core'
+import { Alert, Button, Loader, Modal, Stack, Text } from '@mantine/core'
 import Task from '../Task/Task'
 import CreationForm from '../CreationForm/CreationForm'
+import { AlertTriangle } from 'tabler-icons-react'
 
 export default function TaskList () {
   const { arr, copy, push, filter } = useArray([])
-  const { data, loading, error, post, get } = useFetch('/api') // Add error handling
+  const { data, loading, error, post, get } = useFetch('/api')
   const [opened, setOpened] = useState(false)
   useEffect(() => {
     if (!loading && data) {
@@ -18,18 +19,19 @@ export default function TaskList () {
   const addTask = async values => {
     const result = await post('', { body: JSON.stringify(values) })
     push(result.payload)
+    setOpened(false)
   }
 
   const removeTask = async id => {
     const result = await get(`/${id}`, { method: 'DELETE' })
-    console.log(result)
     if (result.payload.acknowledged) { filter(item => item._id !== id) }
   }
 
   return (
     <>
-      {error && 'Error'}
-      {!loading && data &&
+      {error && <Alert icon={<AlertTriangle size={32} />} title='Whoops!' color='red' variant='filled' radius='md'>Something went wrong! Try refreshing.</Alert>}
+      {loading && <Loader variant='bars' size='xl' />}
+      {data &&
         <Stack sx={{ width: '100%' }}>
           {arr.map(task => {
             return (
