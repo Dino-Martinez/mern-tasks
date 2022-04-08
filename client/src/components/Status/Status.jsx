@@ -37,7 +37,7 @@ export default function Status ({ status, onSelect }) {
         }
         placement='end'
       >
-        <RadioGroup value={selected} onChange={select} label='Set Status'>
+        <RadioGroup value={selected} onChange={select} label='Set Status' size='md' p='md'>
           <Radio value='incomplete' label='Incomplete' />
           <Radio value='complete' label='Complete' />
           <Radio value='in progress' label='In Progress' />

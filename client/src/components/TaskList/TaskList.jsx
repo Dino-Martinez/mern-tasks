@@ -48,7 +48,7 @@ export default function TaskList () {
               <Task key={task._id} task={task} onDelete={removeTask} onUpdate={updateTask} />
             )
           })}
-          <Button variant='gradient' gradient={{ from: 'indigo', to: 'cyan', deg: 45 }} size='xl' onClick={() => setOpened(true)}> <Text size='xl'>Create a Task</Text> </Button>
+          <Button variant='gradient' gradient={{ from: 'indigo', to: 'cyan', deg: 45 }} size='xl' mb='md' onClick={() => setOpened(true)}> <Text size='xl'>Create a Task</Text> </Button>
           <Modal
             centered
             opened={opened}
