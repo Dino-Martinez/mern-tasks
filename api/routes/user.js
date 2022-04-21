@@ -1,7 +1,16 @@
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
+const Task = require('../models/task')
 
 module.exports = app => {
+  app.get('/user/', async (req, res) => {
+    const { user } = req
+    console.log('retriving tasks...')
+    if (!user) return res.json({ payload: 'User not logged in' })
+    const allTasks = await Task.find({ author: user._id }).lean()
+    return res.json({ payload: allTasks })
+  })
+
   app.post('/user/sign-up', (req, res) => {
     const user = new User(req.body)
     user

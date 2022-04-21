@@ -1,24 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import useArray from '../../hooks/useArray'
 import useFetch from '../../hooks/useFetch'
-import { Alert, Button, Loader, Modal, PasswordInput, Stack, Text, TextInput, Title } from '@mantine/core'
+import { Alert, Button, Loader, Modal, Stack, Text } from '@mantine/core'
 import Task from '../Task/Task'
 import CreationForm from '../CreationForm/CreationForm'
-import { AlertTriangle, EyeOff, EyeCheck } from 'tabler-icons-react'
+import { AlertTriangle } from 'tabler-icons-react'
 
 export default function TaskList () {
   const { arr, copy, push, filter, update } = useArray([])
-  const { data, loading, error, post, get } = useFetch('/api')
-  const [loggedIn, setLoggedIn] = useState(false)
+  const { data, loading, error, post, get } = useFetch('/api/user')
   const [opened, setOpened] = useState(false)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
 
   useEffect(() => {
     if (!loading && data) {
-      console.log(data)
-      if (data.payload === 'User not logged in' || !data.payload) { return setLoggedIn(false) }
-      setLoggedIn(true)
       copy(data.payload)
     }
   }, [loading, data])
@@ -44,37 +38,13 @@ export default function TaskList () {
     }
   }
 
-  const login = async () => {
-    const result = await post('/user/login', { body: JSON.stringify({ username, password }) })
-    console.log(result)
-  }
-  const signUp = async () => {
-    const result = await post('/user/sign-up', { body: JSON.stringify({ username, password }) })
-    console.log(result)
-  }
-  const logOut = async () => {
-    const result = await get('/user/logout')
-    console.log(result)
-  }
-
   return (
     <>
       {error && <Alert icon={<AlertTriangle size={32} />} title='Whoops!' color='red' variant='filled' radius='md'>Something went wrong! Try refreshing.</Alert>}
       {loading && <Loader variant='bars' size='xl' />}
-      {!loggedIn &&
+
+      {arr &&
         <Stack sx={{ width: '100%' }}>
-          <Title order={1}>You must be logged in to use this site</Title>
-          <TextInput placeholder='johnTheMan' label='Username' value={username} onChange={(e) => setUsername(e.currentTarget.value)} required />
-          <PasswordInput
-            placeholder='johnTheMan' label='Username' value={password} onChange={(e) => setPassword(e.currentTarget.value)} required visibilityToggleIcon={({ reveal, size }) =>
-              reveal ? <EyeOff size={size} /> : <EyeCheck size={size} />}
-          />
-          <Button onClick={login}>Log In</Button>
-          <Button onClick={signUp}>Sign Up</Button>
-        </Stack>}
-      {arr && loggedIn &&
-        <Stack sx={{ width: '100%' }}>
-          <Button onClick={logOut}>Log Out</Button>
           {arr.map(task => {
             return (
               <Task key={task._id} task={task} onDelete={removeTask} onUpdate={updateTask} />
