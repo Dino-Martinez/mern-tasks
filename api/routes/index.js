@@ -4,7 +4,7 @@ module.exports = app => {
   app.get('/', async (req, res) => {
     const { user } = req
     if (!user) return res.json({ payload: 'User not logged in' })
-    const allTasks = await Task.find({ }).lean()
+    const allTasks = await Task.find({ author: user._id }).lean()
     return res.json({ payload: allTasks })
   })
 
@@ -16,8 +16,9 @@ module.exports = app => {
 
   app.post('/', async (req, res) => {
     const data = req.body
+    const { user } = req
 
-    const task = new Task(data)
+    const task = new Task({ ...data, author: user._id })
 
     await task.save()
 
