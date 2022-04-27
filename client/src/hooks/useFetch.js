@@ -43,7 +43,6 @@ export default function useFetch (url, options = {}, dependencies = [], runOnMou
   }
 
   useEffect(() => {
-    console.log(firstUpdate.current)
     if (!firstUpdate.current) refetch()
     if (firstUpdate.current) firstUpdate.current = false
   }, dependencies)

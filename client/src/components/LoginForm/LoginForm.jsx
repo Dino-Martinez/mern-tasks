@@ -2,19 +2,19 @@ import React, { useState } from 'react'
 import { Button, PasswordInput, Stack, TextInput, Title } from '@mantine/core'
 import { EyeOff, EyeCheck } from 'tabler-icons-react'
 import useFetch from '../../hooks/useFetch'
-
-export default function LoginForm () {
+import { func } from 'prop-types'
+export default function LoginForm ({ setAuth }) {
   const { post } = useFetch('/api/user')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   const login = async () => {
     const result = await post('/login', { body: JSON.stringify({ username, password }) })
-    console.log(result)
+    setAuth(result.message === 'Logged in')
   }
   const signUp = async () => {
     const result = await post('/sign-up', { body: JSON.stringify({ username, password }) })
-    console.log(result)
+    setAuth(result.message === 'Logged in')
   }
 
   return (
@@ -25,8 +25,12 @@ export default function LoginForm () {
         placeholder='johnTheMan' label='Username' value={password} onChange={(e) => setPassword(e.currentTarget.value)} required visibilityToggleIcon={({ reveal, size }) =>
           reveal ? <EyeOff size={size} /> : <EyeCheck size={size} />}
       />
-      <Button onClick={login}>Log In</Button>
-      <Button onClick={signUp}>Sign Up</Button>
+      <Button variant='gradient' gradient={{ from: 'indigo', to: 'cyan', deg: 45 }} size='xl' onClick={login}>Log In</Button>
+      <Button variant='gradient' gradient={{ from: 'indigo', to: 'cyan', deg: 45 }} size='xl' onClick={signUp}>Sign Up</Button>
     </Stack>
   )
+}
+
+LoginForm.propTypes = {
+  setAuth: func
 }

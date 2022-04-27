@@ -8,7 +8,7 @@ import { AuthContext } from './hooks/useAuth'
 import LoginForm from './components/LoginForm/LoginForm'
 function App () {
   const [theme, setTheme] = useState('dark')
-  const { data, loading } = useFetch('/api')
+  const { data, loading } = useFetch('/api/user')
   const [authenticated, setAuth] = useState(false)
   useEffect(() => {
     if (!loading && data) setAuth(data.payload)
@@ -19,13 +19,13 @@ function App () {
       <AuthContext.Provider value={authenticated}>
         <Container size='sm'>
           <AppShell padding={0}>
-            <Nav theme={theme} setTheme={setTheme} />
+            <Nav theme={theme} setTheme={setTheme} setAuth={setAuth} />
           </AppShell>
           <Center>
             {authenticated &&
               <TaskList />}
             {!authenticated &&
-              <LoginForm />}
+              <LoginForm setAuth={setAuth} />}
           </Center>
         </Container>
       </AuthContext.Provider>

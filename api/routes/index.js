@@ -3,8 +3,9 @@ const Task = require('../models/task')
 module.exports = app => {
   app.get('/', async (req, res) => {
     const { user } = req
-    console.log('authenticating...')
-    return res.json({ payload: user !== null })
+    if (!user) return res.json({ payload: 'User not logged in' })
+    const allTasks = await Task.find({ author: user._id }).lean()
+    return res.json({ payload: allTasks })
   })
 
   app.post('/', async (req, res) => {
