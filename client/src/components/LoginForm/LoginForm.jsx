@@ -9,11 +9,11 @@ export default function LoginForm ({ setAuth }) {
   const [password, setPassword] = useState('')
 
   const login = async () => {
-    const result = await post('/login', { body: JSON.stringify({ username, password }) })
+    const result = await post('login', { body: JSON.stringify({ username, password }) })
     setAuth(result.message === 'Logged in')
   }
   const signUp = async () => {
-    const result = await post('/sign-up', { body: JSON.stringify({ username, password }) })
+    const result = await post('sign-up', { body: JSON.stringify({ username, password }) })
     setAuth(result.message === 'Logged in')
   }
 

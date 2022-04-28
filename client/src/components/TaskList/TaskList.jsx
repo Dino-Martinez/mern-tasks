@@ -8,7 +8,7 @@ import { AlertTriangle } from 'tabler-icons-react'
 
 export default function TaskList () {
   const { arr, copy, push, filter, update } = useArray([])
-  const { data, loading, error, post, get } = useFetch('/api')
+  const { data, loading, error, post, get } = useFetch('/api', {}, [], true)
   const [opened, setOpened] = useState(false)
 
   useEffect(() => {
@@ -24,12 +24,12 @@ export default function TaskList () {
   }
 
   const removeTask = async id => {
-    const result = await get(`/${id}`, { method: 'DELETE' })
+    const result = await get(`${id}`, { method: 'DELETE' })
     if (result.payload.acknowledged) { filter(item => item._id !== id) }
   }
 
   const updateTask = async (id, value) => {
-    const result = await get(`/${id}`, { method: 'PUT', body: JSON.stringify({ status: value }) })
+    const result = await get(`${id}`, { method: 'PUT', body: JSON.stringify({ status: value }) })
     if (result.payload) {
       const index = arr.findIndex(task => task._id === id)
       const old = arr.find(task => task._id === id)

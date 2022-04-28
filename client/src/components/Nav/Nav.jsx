@@ -15,7 +15,7 @@ export default function Nav ({ theme, setTheme, setAuth }) {
   }
   const logOut = async () => {
     handlers.close()
-    const result = await get('/logout')
+    const result = await get('logout')
     setAuth(result.message !== 'Logged out')
   }
   return (

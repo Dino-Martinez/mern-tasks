@@ -8,7 +8,7 @@ import { AuthContext } from './hooks/useAuth'
 import LoginForm from './components/LoginForm/LoginForm'
 function App () {
   const [theme, setTheme] = useState('dark')
-  const { data, loading } = useFetch('/api/user')
+  const { data, loading } = useFetch('/api/user', {}, [], true)
   const [authenticated, setAuth] = useState(false)
   useEffect(() => {
     if (!loading && data) setAuth(data.payload)
