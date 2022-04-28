@@ -6,17 +6,7 @@ WORKDIR /usr/src/app
 # Install app dependencies
 COPY package*.json ./
 
-RUN npm install
-
-WORKDIR /usr/src/app/api
-COPY package*.json ./
-
-RUN npm install
-
-WORKDIR /usr/src/app/client
-COPY package*.json ./
-
-RUN npm install
+RUN npm ci --only=production
 
 # If you are building your code for production
 # RUN npm ci --only=production
@@ -26,4 +16,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "startApi" ]
