@@ -22,7 +22,7 @@ export default function LoginForm ({ setAuth }) {
       <Title order={1}>You must be logged in to use this site</Title>
       <TextInput placeholder='johnTheMan' label='Username' value={username} onChange={(e) => setUsername(e.currentTarget.value)} required />
       <PasswordInput
-        placeholder='johnTheMan' label='Username' value={password} onChange={(e) => setPassword(e.currentTarget.value)} required visibilityToggleIcon={({ reveal, size }) =>
+        placeholder='johnTheMan' label='Password' value={password} onChange={(e) => setPassword(e.currentTarget.value)} required visibilityToggleIcon={({ reveal, size }) =>
           reveal ? <EyeOff size={size} /> : <EyeCheck size={size} />}
       />
       <Button variant='gradient' gradient={{ from: 'indigo', to: 'cyan', deg: 45 }} size='xl' onClick={login}>Log In</Button>
