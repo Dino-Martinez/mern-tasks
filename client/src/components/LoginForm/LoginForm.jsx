@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Button, PasswordInput, Stack, TextInput, Title } from '@mantine/core'
-import { EyeOff, EyeCheck } from 'tabler-icons-react'
+import { Button, PasswordInput, Stack, TextInput, Title, Alert } from '@mantine/core'
+import { EyeOff, EyeCheck, AlertTriangle } from 'tabler-icons-react'
 import useFetch from '../../hooks/useFetch'
 import { func } from 'prop-types'
 export default function LoginForm ({ setAuth }) {
-  const { post } = useFetch('/api/user')
+  const { error, post } = useFetch('/api/user')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -19,6 +19,7 @@ export default function LoginForm ({ setAuth }) {
 
   return (
     <Stack sx={{ width: '100%' }}>
+      {error && <Alert icon={<AlertTriangle size={32} />} title='Whoops!' color='red' variant='filled' radius='md'>Something went wrong: {error.message} </Alert>}
       <Title order={1}>You must be logged in to use this site</Title>
       <TextInput placeholder='johnTheMan' label='Username' value={username} onChange={(e) => setUsername(e.currentTarget.value)} required />
       <PasswordInput

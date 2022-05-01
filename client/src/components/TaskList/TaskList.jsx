@@ -40,10 +40,10 @@ export default function TaskList () {
 
   return (
     <>
-      {error && <Alert icon={<AlertTriangle size={32} />} title='Whoops!' color='red' variant='filled' radius='md'>Something went wrong! Try refreshing.</Alert>}
+      {error && <Alert icon={<AlertTriangle size={32} />} title='Whoops!' color='red' variant='filled' radius='md'>Something went wrong! Details: {error}</Alert>}
       {loading && <Loader variant='bars' size='xl' />}
 
-      {arr && !loading &&
+      {arr && !loading && !error &&
         <Stack sx={{ width: '100%' }}>
           {arr.map(task => {
             return (

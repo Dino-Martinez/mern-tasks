@@ -16,11 +16,11 @@ export default function Task ({ task, onDelete, onUpdate }) {
   const parseDueDate = () => {
     const today = new Date()
     const due = new Date(task.dueDate)
-    const difference = date.subtract(due, today).toDays()
+    const difference = date.subtract(due, today).toDays() + 1
     if (difference < -1) return `Due ${-Math.floor(difference)} Days Ago`
     if (difference < 0) return 'Due Yesterday'
-    if (difference > 1) return `Due In ${Math.ceil(difference)} Days`
-    return 'Due Today'
+    if (difference > 2) return `Due In ${Math.floor(difference)} Days`
+    else if (difference > 1) return 'Due Tomorrow'
   }
 
   return (

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-handler-names */
 import React from 'react'
-import { ActionIcon, Group, Header, Menu, Title } from '@mantine/core'
+import { ActionIcon, Group, Header, Menu, Title, Text } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { Sun, Moon, User, Logout } from 'tabler-icons-react'
 import useFetch from '../../hooks/useFetch'
@@ -21,7 +21,7 @@ export default function Nav ({ theme, setTheme, setAuth }) {
   return (
     <Header py='md' mb='lg'>
       <Group grow>
-        <Title order={1}>Simple Task Manager</Title>
+        <Title order={1}> <Text variant='gradient' gradient={{ from: 'indigo', to: 'cyan', deg: 45 }} sx={{ fontSize: 42 }}>Simple</Text>  Task Manager</Title>
         <Group position='right'>
           <Menu
             opened={opened}
