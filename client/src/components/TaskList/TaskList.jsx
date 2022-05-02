@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import useArray from '../../hooks/useArray'
 import useFetch from '../../hooks/useFetch'
-import { Alert, Button, Loader, Modal, Stack, Text } from '@mantine/core'
+import { Button, Loader, Modal, Stack, Text } from '@mantine/core'
 import Task from '../Task/Task'
 import CreationForm from '../CreationForm/CreationForm'
 import { AlertTriangle } from 'tabler-icons-react'
+import { showNotification } from '@mantine/notifications'
 
 export default function TaskList () {
   const { arr, copy, push, filter, update } = useArray([])
@@ -38,9 +39,33 @@ export default function TaskList () {
     }
   }
 
+  useEffect(() => {
+    if (error) {
+      showNotification({
+        title: 'Whoops!',
+        message: `Something went wrong: ${error.message}`,
+        styles: (theme) => ({
+          root: {
+            backgroundColor: theme.colors.red[9],
+            '> .__mantine-ref-icon': { backgroundColor: 'transparent' }
+          },
+
+          title: { color: theme.white },
+          description: { color: theme.white },
+          closeButton: {
+            color: theme.white,
+            '&:hover': { backgroundColor: theme.colors.red[8] }
+          }
+        }),
+        icon: <AlertTriangle size={32} />,
+        loading: false,
+        autoClose: 4000
+      })
+    }
+  }, [error])
+
   return (
     <>
-      {error && <Alert icon={<AlertTriangle size={32} />} title='Whoops!' color='red' variant='filled' radius='md'>Something went wrong! Details: {error}</Alert>}
       {loading && <Loader variant='bars' size='xl' />}
 
       {arr && !loading && !error &&
