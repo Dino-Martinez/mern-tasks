@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, PasswordInput, Stack, TextInput, Title } from '@mantine/core'
-import { EyeOff, EyeCheck } from 'tabler-icons-react'
+import { EyeOff, EyeCheck, AlertTriangle } from 'tabler-icons-react'
 import useFetch from '../../hooks/useFetch'
 import { func } from 'prop-types'
+import { showNotification } from '@mantine/notifications'
 export default function LoginForm ({ setAuth }) {
-  const { post } = useFetch('/api/user')
+  const { error, post } = useFetch('/api/user')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -16,6 +17,31 @@ export default function LoginForm ({ setAuth }) {
     const result = await post('sign-up', { body: JSON.stringify({ username, password }) })
     setAuth(result.message === 'Logged in')
   }
+
+  useEffect(() => {
+    if (error) {
+      showNotification({
+        title: 'Whoops!',
+        message: `Something went wrong: ${error.message}`,
+        styles: (theme) => ({
+          root: {
+            backgroundColor: theme.colors.red[9],
+            '> .__mantine-ref-icon': { backgroundColor: 'transparent' }
+          },
+
+          title: { color: theme.white },
+          description: { color: theme.white },
+          closeButton: {
+            color: theme.white,
+            '&:hover': { backgroundColor: theme.colors.red[8] }
+          }
+        }),
+        icon: <AlertTriangle size={32} />,
+        loading: false,
+        autoClose: 4000
+      })
+    }
+  }, [error])
 
   return (
     <Stack sx={{ width: '100%' }}>

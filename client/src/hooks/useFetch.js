@@ -13,33 +13,47 @@ export default function useFetch (url, options = {}, dependencies = [], runOnMou
   const [error, setError] = useState()
   const firstUpdate = useRef(!runOnMount)
 
-  const refetch = (route = '', newOptions = {}) => {
+  const refetch = async (route = '', newOptions = {}) => {
     const urlRoute = `${url}/${route}`
     setLoading(true)
-    return fetch(urlRoute, { ...DEFAULT_OPTIONS, ...options, ...newOptions })
-      .then(res => res.json())
-      .then(json => {
-        setData(json)
-        setLoading(false)
-      }).catch(setError)
+    try {
+      const res = await fetch(urlRoute, { ...DEFAULT_OPTIONS, ...options, ...newOptions })
+      const json = await res.json()
+
+      if (res.status > 399) throw new Error(json.message)
+      setData(json)
+      setLoading(false)
+    } catch (error) {
+      setError(error)
+    }
   }
 
-  const post = (route = '', newOptions = {}) => {
+  const post = async (route = '', newOptions = {}) => {
     const urlRoute = `${url}/${route}`
-    return fetch(urlRoute, { ...DEFAULT_OPTIONS, ...options, ...newOptions, method: 'POST' })
-      .then(res => res.json())
-      .then(json => {
-        return json
-      }).catch(setError)
+    try {
+      const res = await fetch(urlRoute, { ...DEFAULT_OPTIONS, ...options, ...newOptions, method: 'POST' })
+      const json = await res.json()
+
+      if (res.status > 399) throw new Error(json.message)
+      return json
+    } catch (error) {
+      setError(error)
+      return 'Failure'
+    }
   }
 
-  const get = (route = '', newOptions = {}) => {
+  const get = async (route = '', newOptions = {}) => {
     const urlRoute = `${url}/${route}`
-    return fetch(urlRoute, { ...DEFAULT_OPTIONS, ...options, ...newOptions })
-      .then(res => res.json())
-      .then(json => {
-        return json
-      }).catch(setError)
+    try {
+      const res = await fetch(urlRoute, { ...DEFAULT_OPTIONS, ...options, ...newOptions })
+      const json = await res.json()
+
+      if (res.status > 399) throw new Error(json.message)
+      return json
+    } catch (error) {
+      setError(error)
+      return 'Failure'
+    }
   }
 
   useEffect(() => {
